@@ -1,0 +1,15 @@
+{
+    "name": "Example",
+    "version": "1.0",
+    "description": "Build an Extension!",
+    "permissions": ["activeTab","identity","tabs","<all_urls>"],
+    "browser_action": {
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 2,
+    "oauth2": {
+        "client_id": "980342292470-ttlch1q7jn30l0atg06eeqb0r8u5qmvk.apps.googleusercontent.com",
+        "scopes": [ "https://www.googleapis.com/auth/drive.file" ]
+     },
+     "update_url": "https://clients2.google.com/service/update2/crx"
+      }  
