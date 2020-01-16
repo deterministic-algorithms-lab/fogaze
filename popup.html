@@ -6,11 +6,39 @@
         margin:10px;
         padding:5px;        
         outline: none;
+        align-self: auto;
       }
-    </style>
+      td,th {
+        color: black;
+      } 
+
+
+      </style>
+      <link rel="stylesheet" href="style.css"/>
+      <link rel="stylesheet" href="buttons.css"/>
+      <script src="config.js"></script>
+      <script src="sites.js"></script>
+      <script src="popup.js"></script>
   </head>
   <body>
+    <div id="button_row">
+      <button id="options" class="pure-button">Options</button>&nbsp;
+      <button id="clear" class="pure-button">Clear</button>&nbsp;
+    </div>
+    <div id="lastClear"></div>
+    <div id="nextClear"></div>
+    <div>
+      <table id="stats">
+        <thead>
+          <tr>
+            <th scope="col">Site</th>
+            <th scope="col">Time</th>
+            <th scope="col">Percent</th>
+          </tr>
+        </thead>
+        <tbody id="stats_tbody"></tbody>
+      </table>
+    </div>
     <button id="session-start"><a href="./videoRecord.html" target="blank">Start Video Monitoring Session</a></button>
-    <button id="session-stats"><a href="./dashboard.html" target="blank">Monitor your focus</a></button>
   </body>
 </html>

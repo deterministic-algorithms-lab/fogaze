@@ -1,7 +1,4 @@
 'use strict';
-console.log('camera script');
-
-/* globals MediaRecorder */
 
 // This code is adapted from
 // https://rawgit.com/Miguelao/demos/master/mediarecorder.html
@@ -14,12 +11,6 @@ var sourceBuffer;
 var intervalTimer;
 var startTime;
 var finishTime;
-
-Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-    faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-    faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-]).then(startVideo)
 
 
 var gumVideo = document.querySelector('#video');
@@ -72,20 +63,6 @@ function errorCallback(error) {
   console.log('navigator.getUserMedia error: ', error);
 }
 
-// navigator.mediaDevices.getUserMedia(constraints)
-// .then(function(stream) {
-//   console.log('getUserMedia() got stream: ', stream);
-//   window.stream = stream; // make available to browser console
-//   if (window.URL) {
-//     gumVideo.src = window.URL.createObjectURL(stream);
-//   } else {
-//     gumVideo.src = stream;
-//   }
-// }).catch(function(error) {
-//   console.log('navigator.getUserMedia error: ', error);
-// });
-
-
 function handleSourceOpen(event) {
   console.log('MediaSource opened');
   sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
@@ -115,40 +92,10 @@ function toggleRecording() {
 }
 
 
-const video = document.getElementById('video')
-
-
-
-
-function startVideo()
-{
-    // navigator.getUserMedia(
-    //     {video: {} },stream => video.srcObject = stream,
-    //     err=> console.error(err)
-
-    // )
-}
-// function startRecording (){
-
-//     const canvas = faceapi.createCanvasFromMedia(video)
-//     document.body.append(canvas)
-//     console.log('working');
-//     const displaysize = {width: video.width,height: video.height}
-//     faceapi.matchDimensions(canvas,displaysize)
-//     setInterval(async ()=>{
-//         const detections = await faceapi.detectAllFaces(video, 
-//         new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks()  
-//         const resizedDetections = faceapi.resizeResults(detections,displaysize)
-//         canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height )
-//         faceapi.draw.drawDetections(canvas,resizedDetections)
-//         //faceapi.draw.drawFaceLandmarks(canvas,resizedDetections)
-//     },100)
-// }
-
 // The nested try blocks will be simplified when Chrome 47 moves to Stable
-async function startRecording() {
+function startRecording() {
   var options = {
-    videoBitsPerSecond : 25000,
+    videoBitsPerSecond : 250000,
     mimeType: 'video/webm',
   };
   recordedBlobs = [];
@@ -158,7 +105,7 @@ async function startRecording() {
     console.log('Unable to create MediaRecorder with options Object: ', e0);
     try {
       options = {
-        videoBitsPerSecond : 250000,
+        videoBitsPerSecond : 2500000,
         mimeType: 'video/webm,codecs=vp9',
       };
       mediaRecorder = new MediaRecorder(window.stream, options);
@@ -174,51 +121,15 @@ async function startRecording() {
       }
     }
   }
-  console.log('working');
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
   // recordButton.textContent = 'Stop Recording';
   // playButton.disabled = true;
   // downloadButton.disabled = true;
   mediaRecorder.onstop = handleStop;
   mediaRecorder.ondataavailable = handleDataAvailable;
-  await mediaRecorder.start(60000); // collect 10ms of data
-//   const canvas = await faceapi.createCanvasFromMedia(gumVideo)
-//     document.body.append(canvas)
-//     const displaysize = {width: video.width,height: video.height}
-//     faceapi.matchDimensions(canvas,displaysize)
-//     setInterval(async ()=>{
-//         const detections = await faceapi.detectAllFaces(video, 
-//         new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks()  
-//         const resizedDetections = faceapi.resizeResults(detections,displaysize)
-//         canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height )
-//         faceapi.draw.drawDetections(canvas,resizedDetections)
-//         //faceapi.draw.drawFaceLandmarks(canvas,resizedDetections)
-//     },100)
+  mediaRecorder.start(60000); // collect 10ms of data
   console.log('MediaRecorder started', mediaRecorder);
 }
-
-gumVideo.addEventListener('play',()=>{
-    const canvas = faceapi.createCanvasFromMedia(gumVideo);
-    canvas.style.position = 'absolute';
-    console.log('canvas working')
-    document.body.append(canvas)
-    const displaysize = {width: gumVideo.width,height: gumVideo.height}
-    faceapi.matchDimensions(canvas,displaysize)
-    setInterval(async ()=>{
-        const detections = await faceapi.detectAllFaces(gumVideo, 
-        new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks()  
-        const resizedDetections = faceapi.resizeResults(detections,displaysize)
-        canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height )
-        faceapi.draw.drawDetections(canvas,resizedDetections)
-        faceapi.draw.drawFaceLandmarks(canvas,resizedDetections)
-        // x1=resizedDetections[0]["landmarks"]["positions"][36]["x"];
-        // x2=resizedDetections[0]["landmarks"]["positions"][40]["x"];
-        // y1=resizedDetections[0]["landmarks"]["positions"][37]["y"];
-        // y2=resizedDetections[0]["landmarks"]["positions"][41]["y"];
-        console.log(resizedDetections['length']);
-        console.log(resizedDetections);
-    },100)
-})
 
 
 function timerTick() {

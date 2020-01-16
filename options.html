@@ -1,0 +1,32 @@
+<html>
+  <head><title>Time Tracker Preferences</title></head>
+  <script src="config.js"></script>
+  <script src="sites.js"></script>
+  <script src="options.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="buttons.css"/>
+
+  <body>
+    <b>Time Display</b>:
+    <select id="time_display" class="pure-input-1-2">
+      <option value="0">Pretty</option>
+      <option value="1">Minutes</option>
+    </select>
+    <br/>
+    <b>Manage Ignored Sites</b>: <br/>
+    <input type="text" id="new_ignored_site"></input>
+    <button id="add_ignored">Add</button><br/>
+    <select id="ignored_sites" MULTIPLE size="10">
+    </select><br/>
+    <button id="remove_ignored">Remove Selected</button>
+    <br/>
+    <b>Clear Statistics Every</b>:
+    <select id="clear_stats_interval">
+      <option value="0">never</option>
+      <option value="3600">Hour</option>
+      <option value="86400">Day</option>
+      <option value="604800">Week</option>
+    </select><br/>
+    <button id="download" class="pure-button">Download CSV</button><br/>
+  </body>
+</html>

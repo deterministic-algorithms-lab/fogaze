@@ -1,3 +1,4 @@
+/*
 "use strict";
 
 function dataURLtoBlob(e) {
@@ -270,7 +271,7 @@ MediaUploader.prototype.upload = function() {
     o.open("PUT", this.url, !0), o.setRequestHeader("Content-Type", this.contentType), o.setRequestHeader("Content-Range", "bytes " + this.offset + "-" + (t - 1) + "/" + this.file.size), o.setRequestHeader("X-Upload-Content-Type", this.file.type), o.upload && o.upload.addEventListener("progress", this.onProgress), o.onload = this.onContentUploadSuccess_.bind(this), o.onerror = this.onContentUploadError_.bind(this), o.send(e)
 }, MediaUploader.prototype.resume_ = function() {
     var e = new XMLHttpRequest;
-    e.open("PUT", this.url, !0), e.setRequestHeader("Content-Range", "bytes */" + this.file.size), e.setRequestHeader("X-Upload-Content-Type", this.file.type), e.upload && e.upload.addEventListener("progress", this.onProgress), e.onload = this.onContentUploadSuccess_.bind(this), e.onerror = this.onContentUploadError_.bind(this), e.send()
+    e.open("PUT", this.url, !0), e.setRequestHeader("Content-Range", "bytes * /" + this.file.size), e.setRequestHeader("X-Upload-Content-Type", this.file.type), e.upload && e.upload.addEventListener("progress", this.onProgress), e.onload = this.onContentUploadSuccess_.bind(this), e.onerror = this.onContentUploadError_.bind(this), e.send()
 }, MediaUploader.prototype.extractRange_ = function(e) {
     var t = e.getResponseHeader("Range");
     t && (this.offset = parseInt(t.match(/\d+/g).pop(), 10) + 1)
@@ -289,98 +290,80 @@ MediaUploader.prototype.upload = function() {
     e && (n += e);
     var r = this.buildQuery_(t);
     return r && (n += "?" + r), n
-};
-var SlidesUploader = function(e) {
-    this.token = e.token, this.httpMethod = "POST", this.metadata = e.metadata || {}, this.presentationId = e.presentationId, this.imageUrls = e.urls, this.onComplete = e.onComplete, this.onError = e.onError, this.retryInterval = 1e3, this.maxRetry = 5, this.currentRetry = 0
-};
-SlidesUploader.prototype.upload = function() {
-    var t = this;
-    console.log("SlidesUploader: upload");
-    for (var o = this, n = new XMLHttpRequest, r = "https://slides.googleapis.com/v1/presentations/" + this.presentationId + ":batchUpdate", s = [], i = [], a = [], l = 0; l < this.imageUrls.length; l++) {
-        var d = "MyPage_" + l,
-            c = "MyImage_" + l,
-            u = "MyText_" + l,
-            p = this.imageUrls[l],
-            h = {
-                createSlide: {
-                    objectId: d,
-                    insertionIndex: l
-                }
-            };
-        s[l] = h;
-        var g = {
-            createImage: {
-                objectId: c,
-                url: p,
-                elementProperties: {
-                    pageObjectId: d,
-                    size: {
-                        width: {
-                            magnitude: 500,
-                            unit: "PT"
-                        },
-                        height: {
-                            magnitude: 500,
-                            unit: "PT"
-                        }
-                    },
-                    transform: {
-                        scaleX: 1,
-                        scaleY: 1,
-                        translateX: 8,
-                        translateY: -50,
-                        unit: "PT"
-                    }
-                }
-            }
-        };
-        i[l] = g;
-        var f = {
-            createShape: {
-                objectId: u,
-                shapeType: "TEXT_BOX",
-                elementProperties: {
-                    pageObjectId: d,
-                    size: {
-                        width: {
-                            magnitude: 200,
-                            unit: "PT"
-                        },
-                        height: {
-                            magnitude: 390,
-                            unit: "PT"
-                        }
-                    },
-                    transform: {
-                        scaleX: 1,
-                        scaleY: 1,
-                        translateX: 516,
-                        translateY: 8,
-                        unit: "PT"
-                    }
-                }
-            }
-        };
-        a[l] = f
+};*/
+
+// --------Dashboard Functions---------//
+function currentTab (){
+    // chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+    //     console.log(tabs[0].url);
+    // });
+    chrome.browserAction.onClicked.addListener(function(e){
+        console.log(e.url); 
+        //give you the url of the tab on which you clicked the extension
+   })
+}
+
+
+
+
+
+//-----------------------------Visited sites-----------//
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-45267314-2']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+function clearStats() {
+  if (config.clearStatsInterval < 3600) {
+    config.nextTimeToClear = 0;
+    return;
+  }
+
+  if (!config.nextTimeToClear) {
+    var d = new Date();
+    d.setTime(d.getTime() + config.clearStatsInterval * 1000);
+    d.setMinutes(0);
+    d.setSeconds(0);
+    if (config.clearStatsInterval > 3600) {
+      d.setHours(0);
     }
-    var m = {
-            deleteObject: {
-                objectId: "p"
-            }
-        },
-        v = {
-            requests: s.concat(i).concat(a).concat([m])
-        };
-    n.open(this.httpMethod, r, !0), n.setRequestHeader("Authorization", "Bearer " + this.token), n.setRequestHeader("Content-Type", "application/json"), n.onload = function(e) {
-        if (200 == e.target.status) {
-            var t = JSON.parse(e.target.responseText),
-                r = t.replies;
-            o.onComplete(r)
-        } else n = null, o.retry(e.target.response)
-    }, n.onerror = function() {
-        t.retry(e.target.response)
-    }, n.send(JSON.stringify(v))
-}, SlidesUploader.prototype.retry = function(e) {
-    console.log(e), this.currentRetry < this.maxRetry ? (this.currentRetry = this.currentRetry + 1, console.log("SlidesUploaded: retry " + this.currentRetry), setTimeout(this.upload.bind(this), this.retryInterval)) : this.onError(e)
-};
-//# sourceMappingURL=background.js.map
+    config.nextTimeToClear = d.getTime();
+  }
+  var now = new Date();
+  if (now.getTime() > config.nextTimeToClear) {
+    sites.clear();
+    var nextTimeToClear = new Date(nextTimeToClear + config.clearStatsInterval * 1000);
+    config.nextTimeToClear = nextTimeToClear.getTime();
+    return;
+  }
+}
+
+var config = new Config();
+var sites = new Sites(config);
+var tracker = new Tracker(config, sites);
+
+/* Listen for requests which come from the user through the popup. */
+chrome.extension.onRequest.addListener(
+  function(request, sender, sendResponse) {
+    if (request.action == "clearStats") {
+      sites.clear();
+      sendResponse({});
+    } else if (request.action == "addIgnoredSite") {
+      config.addIgnoredSite(request.site);
+      sendResponse({});
+    } else {
+      console.log("Invalid action given: " + request.action);
+    }
+  });
+
+chrome.alarms.create("clearStats", {periodInMinutes: 2});
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  if (alarm.name == "clearStats") {
+    clearStats(config);
+  }
+});
