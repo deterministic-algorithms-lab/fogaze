@@ -39,6 +39,13 @@
         <tbody id="stats_tbody"></tbody>
       </table>
     </div>
-    <button id="session-start"><a href="./videoRecord.html" target="blank">Start Video Monitoring Session</a></button>
+    <div>
+      <video id="video" width="0" height="0"  autoplay></video>
+      <div id="timer">00:00</div>
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+      <button id="download">Download</button>
+      <script src="./videoRecord.js"></script>
+    </div>
   </body>
 </html>

@@ -102,6 +102,20 @@ function download() {
   }
   csvContent += pairs.join("\n");
   window.open(encodeURI(csvContent));
+  
+  for (index = 0; index < pairs.length; index++){
+    db.collection("tracking_test").add({
+      url: pairs[index].split(",")[0],
+      time: parseFloat(pairs[index].split(",")[1])
+    })
+    .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+  });
+  }
+
 }
 
 document.addEventListener("DOMContentLoaded", function () {
