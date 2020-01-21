@@ -7,10 +7,10 @@
       "default_popup": "popup.html",
       "default_title": "Monitoring Extension"
     },
-    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://ssl.google-analytics.com; object-src 'self'",
     "background": {
       "persistent": true,
-      "scripts": ["config.js", "sites.js", "tracker.js", "background.js"]
+      "scripts": ["config.js", "sites.js", "tracker.js", "background.js","videoRecord.js"]
   },
     "manifest_version": 2,
     "oauth2": {
