@@ -12,7 +12,6 @@ var autoUploading;
 var startTime;
 var finishTime;
 var uploadTimer;
-var flag=0;
 var gumVideo = document.querySelector('#video');
 var $timer = document.querySelector('#timer');
 var $stopBtn = document.querySelector('#stop');
@@ -208,7 +207,7 @@ function getTimestamp() {
         n = ("00" + e.getDate()).slice(-2),
         r = ("00" + e.getHours()).slice(-2),
         s = ("00" + e.getMinutes()).slice(-2),
-        v = ("00" + e.getSeconds()),
+        v = (e.getSeconds()),
         i = t + "-" + o + "-" + n + "_" + r + "-" + s + "-" +v;
     return i;
 }

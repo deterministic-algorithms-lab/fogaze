@@ -10,7 +10,11 @@
     </style>
   </head>
   <body>
-    <video id="video" width="0" height="0"  autoplay></video>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-storage.js"></script>
+    <script src="./init-firebase.js"></script>
+    <video id="video" width="640" height="480"  autoplay></video>
     <button id="start">Start</button>
     <button id="stop">Stop</button>
     <div id="timer">00:00</div>
