@@ -12,6 +12,7 @@ var autoUploading;
 var startTime;
 var finishTime;
 var uploadTimer;
+var flag=0;
 var gumVideo = document.querySelector('#video');
 var $timer = document.querySelector('#timer');
 var $stopBtn = document.querySelector('#stop');
@@ -54,19 +55,8 @@ function handleDataAvailable(event) {
   }
 }
 
-//var downloadLink=document.getElementById("download");
-
 function handleStop(event) {
   console.log('Recorder stopped: ', event);
-}
-
-
-function toggleRecording() {
-  if (recordButton.textContent === 'Start Recording') {
-    startRecording();
-  } else {
-    stopRecording();
-  }
 }
 
 

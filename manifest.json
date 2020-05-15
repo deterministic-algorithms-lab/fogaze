@@ -7,16 +7,12 @@
       "default_popup": "popup.html",
       "default_title": "Monitoring Extension"
     },
-    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://ssl.google-analytics.com; object-src 'self'",
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://ssl.google-analytics.com; object-src 'self';",
     "background": {
       "persistent": true,
-      "scripts": ["config.js", "sites.js", "tracker.js", "background.js","videoRecord.js"]
+      "page":"background.html"
   },
     "manifest_version": 2,
-    "oauth2": {
-        "client_id": "980342292470-ttlch1q7jn30l0atg06eeqb0r8u5qmvk.apps.googleusercontent.com",
-        "scopes": [ "https://www.googleapis.com/auth/drive.file" ]
-     },
      "options_page": "options.html",
     "icons": { "19": "images/icon19.png", "38": "images/icon38.png",
              "128": "images/icon.png" },
