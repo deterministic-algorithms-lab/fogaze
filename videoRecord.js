@@ -23,6 +23,7 @@ var constraints = {
   video: true
 };
 
+
 function successCallback(stream) {
   console.log('getUserMedia() got stream: ', stream);
   window.stream = stream;
