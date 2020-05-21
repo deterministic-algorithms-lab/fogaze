@@ -2,7 +2,7 @@
     "name": "Monitoring Extension",
     "version": "1.0",
     "description": "A comprehensive monitoring extension",
-    "permissions": ["alarms","idle","activeTab","identity","tabs","<all_urls>"],
+    "permissions": ["alarms","idle","activeTab","identity","tabs","<all_urls>","storage","unlimitedStorage"],
     "browser_action": {
       "default_popup": "popup.html",
       "default_title": "Monitoring Extension"
