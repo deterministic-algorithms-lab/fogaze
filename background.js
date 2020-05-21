@@ -5,6 +5,7 @@ function currentTab (){
     // });
     chrome.browserAction.onClicked.addListener(function(e){
         console.log(e.url); 
+
         //give you the url of the tab on which you clicked the extension
    })
 }
