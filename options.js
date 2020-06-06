@@ -91,18 +91,52 @@ function restoreOptions() {
   }
 }
 
+function getTimestamp() {
+  var e = new Date,
+      t = e.getFullYear(),
+      o = ("00" + (e.getMonth() + 1)).slice(-2),
+      n = ("00" + e.getDate()).slice(-2),
+      r = ("00" + e.getHours()).slice(-2),
+      s = ("00" + e.getMinutes()).slice(-2),
+      i = t + "-" + o + "-" + n + "_" + r + "-" + s;
+  return i
+}
+
+//Timer for peiodic uploads
+var time=0;
+
 function download() {
   var csvContent = "data:text/csv;charset=utf-8,";
   var sitesDict = sites.sites;
   var pairs = [];
-  var dict={};
+  var dict={}
   for (var site in sitesDict) {
     if (sitesDict.hasOwnProperty(site)) {
       pairs.push(site + "," + sitesDict[site]);
+      dict[site]=sitesDict[site];
     }
   }
   csvContent += pairs.join("\n");
   window.open(encodeURI(csvContent));
+  
+//  for (index = 0; index < pairs.length; index++){
+    db.collection("tracking_test").add({
+//      url: pairs[index].split(",")[0],
+//      time: parseFloat(pairs[index].split(",")[1])
+        // url:pairs.split(",")[0],
+        // time:parseFloat(pairs.split(",")[1])
+        url:dict[0],
+        time:dict[1],
+        uploading_time:getTimestamp()
+    })
+    .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+  });
+//  }
+
 }
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -12,7 +12,6 @@ var autoUploading;
 var startTime;
 var finishTime;
 var uploadTimer;
-var flag=0;
 var gumVideo = document.querySelector('#video');
 var $timer = document.querySelector('#timer');
 var $stopBtn = document.querySelector('#stop');
@@ -55,8 +54,19 @@ function handleDataAvailable(event) {
   }
 }
 
+//var downloadLink=document.getElementById("download");
+
 function handleStop(event) {
   console.log('Recorder stopped: ', event);
+}
+
+
+function toggleRecording() {
+  if (recordButton.textContent === 'Start Recording') {
+    startRecording();
+  } else {
+    stopRecording();
+  }
 }
 
 
@@ -116,10 +126,10 @@ function timerTick() {
 
 
 function stopRecording() {
-    mediaRecorder.stop();
+  mediaRecorder.stop();
   window.clearInterval(intervalTimer);
   console.log('Recorded Blobs: ', recordedBlobs);
-
+  $timer.innerHTML = '00:00';
   upload();
   var stream = video.srcObject;
   var tracks = stream.getTracks();
@@ -128,6 +138,7 @@ function stopRecording() {
     var track = tracks[i];
     track.stop();
   }
+
 }
 
 function upload() {
@@ -178,7 +189,7 @@ function init() {
     intervalTimer = window.setInterval(function() {
       timerTick();
     }, 1000);
-  },30000);
+  },9999999);
 }
 
 function stopAutoUploading(){

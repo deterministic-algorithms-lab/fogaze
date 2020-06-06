@@ -1,15 +1,11 @@
 /**
  * Responsible for detecting focus change from tabs and windows.
  */
-
- var startDate=new Date();
 function Tracker(config, sites) {
   this._sites = sites;
   var self = this;
   chrome.tabs.onUpdated.addListener(
     function(tabId, changeInfo, tab) {
-//      console.log("Trying1");
-
       // This tab has updated, but it may not be on focus.
       // It is more reliable to request the current tab URL.
       self._updateTimeWithCurrentTab();
@@ -18,9 +14,6 @@ function Tracker(config, sites) {
   chrome.tabs.onActivated.addListener(
     function(activeInfo) {
       chrome.tabs.get(activeInfo.tabId, function(tab) {
- //       console.log("Trying2");
-   //     console.log(self);
- //       upload(tab.url,)
         self._sites.setCurrentFocus(tab.url);
       });
     }
@@ -31,18 +24,15 @@ function Tracker(config, sites) {
         self._sites.setCurrentFocus(null);
         return;
       }
- //     console.log("Trying3"+document.title);
       self._updateTimeWithCurrentTab();
     }
   );
   chrome.idle.onStateChanged.addListener(function(idleState) {
     if (idleState == "active") {
       config.idle = false;
-  //    console.log("Trying4"+document.title);
       self._updateTimeWithCurrentTab();
     } else {
       config.idle = true;
-  //    console.log("Trying5");
       self._sites.setCurrentFocus(null);
     }
   });

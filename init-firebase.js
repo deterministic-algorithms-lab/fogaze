@@ -13,6 +13,7 @@ apiKey: "AIzaSyAo6HbDZI4eq1z6OEQzR0OYStcgImDuL9A",
   firebase.analytics();
 
 var database = firebase.database();
+var db = firebase.firestore();
 
 var start=document.querySelector('#start');
 
