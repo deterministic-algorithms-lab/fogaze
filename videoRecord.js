@@ -163,7 +163,7 @@ downloadButton.addEventListener('click', () => {
 });
 console.log(recordedBlobs);
     var blob = new Blob(recordedBlobs, { type: 'video/webm' });
-       const ref = firebase.storage().ref();
+    const ref = firebase.storage().ref();
     const file = blob;
     const name = 'test_'+getTimestamp()+'.webm';
     const task = ref.child(name).put(file);

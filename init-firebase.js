@@ -1,13 +1,13 @@
 var firebaseConfig = {
-apiKey: "AIzaSyAo6HbDZI4eq1z6OEQzR0OYStcgImDuL9A",
-    authDomain: "fogaze-rx.firebaseapp.com",
-    databaseURL: "https://fogaze-rx.firebaseio.com",
-    projectId: "fogaze-rx",
-    storageBucket: "fogaze-rx.appspot.com",
-    messagingSenderId: "761259327124",
-    appId: "1:761259327124:web:acab8aa284aba9e0e03e81",
-    measurementId: "G-B26C3C66G0"
-  };
+        apiKey: "AIzaSyB2PsbtUCHr2PeP1GVbN9rp0BJE0YxKSdc",
+        authDomain: "fogaze-utility.firebaseapp.com",
+        databaseURL: "https://fogaze-utility.firebaseio.com",
+        projectId: "fogaze-utility",
+        storageBucket: "fogaze-utility.appspot.com",
+        messagingSenderId: "91425470876",
+        appId: "1:91425470876:web:b63a244256e87693dd7059",
+        measurementId: "G-XF3YEJJP7X"
+};
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
