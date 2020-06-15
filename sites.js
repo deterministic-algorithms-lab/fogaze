@@ -7,6 +7,7 @@ var globt=0;
 var prev_url=null;
 var prev_domain=null;
 var start_time;
+var db = firebase.firestore();
 
 function Sites(config) {
   this._config = config;
