@@ -7,7 +7,7 @@
       "default_popup": "popup.html",
       "default_title": "Monitoring Extension"
     },
-    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://ssl.google-analytics.com; object-src 'self'",
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://ssl.google-analytics.com https://fogaze-utility.firebaseapp.com https://fogaze-utility.appspot.com https://www.googletagmanager.com; script-src-elem 'self' https://www.gstatic.com/ https://*.firebaseio.com https://ssl.google-analytics.com https://fogaze-utility.firebaseapp.com https://fogaze-utility.appspot.com https://www.googletagmanager.com; object-src 'self'",
     "background": {
       "persistent": true,
       "scripts": ["firebase/app.js","firebase/analytics.js","firebase/auth.js","firebase/database.js","firebase/firestore.js","firebase/storage.js","init-firebase.js","config.js", "sites.js", "tracker.js", "background.js","videoRecord.js"]

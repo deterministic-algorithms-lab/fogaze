@@ -17,6 +17,8 @@ var db = firebase.firestore();
 
 var start=document.querySelector('#start');
 
+if(start){
+
 start.onclick = function start() {
         firebase.database().ref('/').update({start:"Y"}, function (error) {
                 if (error) {
@@ -36,4 +38,5 @@ stop.onclick = function stop() {
                         console.log("Video playing:False")
                 }
         });
+}
 }
