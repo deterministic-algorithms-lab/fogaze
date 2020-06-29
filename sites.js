@@ -73,6 +73,8 @@ Sites.prototype._updateTime = function() {
  * Provide url=null if Chrome is out of focus.
  */
 Sites.prototype.setCurrentFocus = function(url) {
+  //sum all time
+  
  // console.log("setCurrentFocus: " + url);
   this._updateTime();
   if (url == null) {
@@ -83,12 +85,18 @@ Sites.prototype.setCurrentFocus = function(url) {
                 38: 'images/icon_paused38.png'}});
   } else {
     if(globt>1 && prev_url!=="" && prev_domain!==null){
+      var sy = start_time.split("-")[0];
+      var sm = start_time.split("-")[1];
+      var sd = start_time.slice(8,10);
+      var sh = start_time.slice(11,13);
+      var smin = start_time.split("-")[3];
+      var ss = start_time.split("-")[4];
     siteInfo={
       url:prev_url,
       site:prev_domain,
       time:globt,
-      start_time: start_time,
-      uploading_time:getTimestamp()
+      start_time: new Date(sy,sm,sd,sh,smin,ss,"00"),
+      uploading_time: new Date()
     }
     console.log(siteInfo);
     uploadInfo(siteInfo);

@@ -10,12 +10,15 @@ var sourceBuffer;
 var intervalTimer;
 var autoUploading;
 var startTime;
+var start_time;
 var finishTime;
 var uploadTimer;
 var gumVideo = document.querySelector('#video');
 var $timer = document.querySelector('#timer');
 var $stopBtn = document.querySelector('#stop');
 var $startBtn= document.querySelector("#start");
+var db = firebase.firestore();
+var videoinfo;
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
@@ -133,7 +136,7 @@ function stopRecording() {
   upload();
   var stream = video.srcObject;
   var tracks = stream.getTracks();
-
+  finishTime = new Date();
   for (var i = 0; i < tracks.length; i++) {
     var track = tracks[i];
     track.stop();
@@ -176,21 +179,48 @@ console.log(recordedBlobs);
 function init() {
   $timer.innerHTML = '00:00';
   navigator.getUserMedia(constraints, successCallback, errorCallback);
+  start_time = getTimestamp();
   startTime = new Date();
-  uploadTimer= new Date();
   intervalTimer = window.setInterval(function() {
     timerTick();
   }, 1000);
-  autoUploading = window.setInterval(function(){
+  autoUploading = function(){
     startTime = new Date();
     $timer.innerHTML = '00:00';
-    stopRecording();
     navigator.getUserMedia(constraints, successCallback, errorCallback);
     intervalTimer = window.setInterval(function() {
       timerTick();
     }, 1000);
-  },9999999);
+  };
 }
+
+function videolog (videoinfo){
+  db.collection("videolog_test")
+    .add(videoinfo)
+    .then(function (docRef) {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function (error) {
+      console.error("Error adding document: ", error);
+    });
+}
+
+function videoupload(){
+  var sy = start_time.split("-")[0];
+      var sm = start_time.split("-")[1];
+      var sd = start_time.slice(8,10);
+      var sh = start_time.slice(11,13);
+      var smin = start_time.split("-")[3];
+      var ss = start_time.split("-")[4];
+  videoinfo={
+    "start_time": new Date(sy, sm, sd, sh, smin, ss, "00"),
+    "finish_time": finishTime,
+    "upload_time": new Date(),
+    }
+    console.log(videoinfo);
+    videolog(videoinfo);
+}
+
 
 function stopAutoUploading(){
   window.clearInterval(autoUploading);
@@ -200,6 +230,7 @@ if($startBtn){
 $startBtn.addEventListener('click',init);
 $stopBtn.addEventListener('click', stopRecording);
 $stopBtn.addEventListener('click', stopAutoUploading);
+$stopBtn.addEventListener('click', videoupload);
 }
 
 function getTimestamp() {
